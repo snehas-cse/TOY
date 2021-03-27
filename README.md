@@ -3,3 +3,6 @@ Its a basic Toy applicant tracking system. Developed using rest-API for backend 
 
 #About Code
 This is the code which can run in python and it required MySql for database
+
+#Pre-requisites
+This application required python and Fast API libraries to run
