@@ -1,0 +1,6 @@
+#Packages need to be installed
+
+pip
+fastapi
+uvicorn
+sqlalchemy
