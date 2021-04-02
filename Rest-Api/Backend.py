@@ -168,14 +168,16 @@ async def read_candiate_records():
 
 
 async def add(candidate: ApplicantAll):
-    query1 = Candidate_Table.insert().values(job_id=candidate.job_id, first_name=candidate.first_name,
+    try:
+        query1 = Candidate_Table.insert().values(job_id=candidate.job_id, first_name=candidate.first_name,
                                              email_id=candidate.email_id,
                                              it_skills=candidate.it_skills,
                                              qualification=candidate.qualification,
                                              yearofexp=candidate.yearofexp)
-    record = await database.execute(query1)
-    print("record inserted in candidate's")
-
+        record = await database.execute(query1)
+        print("record inserted in candidate's")
+    except Exception:
+        print(Exception)
 
 @app.post("/insert applicant records", response_model=ApplicantAll)
 async def insert_applicant_records(candidate: ApplicantAll):
@@ -190,15 +192,20 @@ async def insert_applicant_records(candidate: ApplicantAll):
                                                  last_name=candidate.last_name, email_id=candidate.email_id,
                                                  it_skills=candidate.it_skills, qualification=candidate.qualification,
                                                  yearofexp=candidate.yearofexp)
-        query2= (Candidate_Table.insert().values(job_id=candidate.job_id, first_name=candidate.first_name,
+        record = await database.execute(query)
+        try:
+            query2= (Candidate_Table.insert().values(job_id=candidate.job_id, first_name=candidate.first_name,
                                             email_id=candidate.email_id,
                                             it_skills=candidate.it_skills,
                                             qualification=candidate.qualification,
                                             yearofexp=candidate.yearofexp))
-        record = await database.execute(query)
 
-
-        result = JSONResponse(content={"message": "Record inserted"})
+            record1=await database.execute(query2)
+        except Exception as e:
+            print(e)
+        finally:
+            result = JSONResponse(content={"message": "Record inserted"})
+        result=JSONResponse(content={"message": "Record inserted"})
     else:
         result = JSONResponse(content={"message": "Error"})
 
